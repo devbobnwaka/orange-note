@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main>
+    <div class="container home-container">
+        <a href="{% url 'core:logout_view' %}">
+            <button class="orange-image" >Sign-Out</button>
+        </a>
+        <div class="flex-box1">
+            <div class="search">
+                <button type="button" class="search-btn"><img src="{% static 'img/search.svg' %}"/></button>
+                <input type="search" name="search" id="search" placeholder="search...">
+            </div>
+            <div>
+                <ul>
+                    {% for note in notes %}
+                        <li>
+                            <h3 class="title">{{ note.title }}</h3>
+                            <p class="note">{{ note.note }}</p>
+                            <div class="edit-delete">
+                                <div class="edit">
+                                    <a href="/edit/{{note.id}}"><img src="{% static 'img/edit.svg' %}" alt="" width="15"></a>
+                                    
+                                </div>
+                                <div class="del">
+                                    <a href="/delete/{{note.id}}"><img src="{% static 'img/delete.svg' %}" alt="" width="25"></a>
+                                </div>
+                            </div>
+                        </li>
+                        {% comment %} <a href="/play-video?video_id={{video.id}}">
+                            <video width="160" height="200" controls>
+                                <source src="{{video.video_path.url}}" type="video/mp4" >
+                            </video>
+                        </a> {% endcomment %}
+                    {% endfor %}
+                </ul>
+                <div class="paginate">
+                    {% if notes.has_previous %}
+                        {% comment %} <a href="?page=1">&laquo; first</a> {% endcomment %}
+                        <a href="?page={{ notes.previous_page_number }}" class='prev'><button>prev</button></a>
+                    {% else %}
+                        <button>first</button>
+                    {% endif %}
+
+                    {% comment %} <span class="current">
+                        Page {{ notes.number }} of {{ notes.paginator.num_pages }}.
+                    </span> {% endcomment %}
+
+                    {% if notes.has_next %}
+                        <a href="?page={{ notes.next_page_number }}" class='next'><button>next</button></a>
+                        {% comment %} <a href="?page={{ notes.paginator.num_pages }}">last &raquo;</a> {% endcomment %}
+                    {% else %}
+                        <button>last</button>
+                    {% endif %}
+                    {% comment %} <button>prev</button>
+                    <button>next</button> {% endcomment %}
+                </div>
+            </div>
+        </div>
+        <form action="." method="POST" class="content-form">
+            {% comment %} {%csrf_token%} {% endcomment %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" class='token'>
+            <div class="flex-box2">
+                <div class="enter_note">
+                    {{ form.as_p }}
+                    <div id="div_editor1" class="editor">
+                        {% comment %} <p>This is a default toolbar demo of Rich text editor.</p>
+                        <p><img src='../img/landing-page.png' width="200"/></p> {% endcomment %}
+                    </div>
+                </div>
+                <button type="submit" class="btn content-btn" >Save</button>
+            </div>
+        </form>
+    </div>
+  </main>
+    <script type="text/javascript">window.CSRF_TOKEN = "{{ csrf_token }}";</script>
+
+    <script type='module' src="{% static 'js/index.js' %}"></script>
+
+    <script>
+        var editor1 = new RichTextEditor("#div_editor1");
+	//editor1.setHTMLCode("Use inline HTML or setHTMLCode to init the default content.");
+    </script>
+{% endblock content %}

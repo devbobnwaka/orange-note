@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main>
+    {% if messages %}
+    {% endif %}
+    <div class="overlay hide fadeIn">
+      <form action="" method="post" class="signup hide">
+        <div class="close fadeOut">&times;</div>
+          {% csrf_token %}
+          {{ signup_form.as_p }}
+        {% comment %} <div>
+          <label for="mail">Email</label>
+          <input type="email" id="mail" class="mail" placeholder="email" value="">
+        </div>
+        <div>
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="username" class="username">
+        </div>
+        <div>
+          <label for="pword">Password</label>
+          <input type="password" id="pword" class="password" placeholder="password">
+        </div>
+        <div>
+          <label for="confirm_password">Confirm Password</label>
+          <input type="password" id="confirm_password" placeholder="confirm password" class="confirmPassword">
+        </div> {% endcomment %}
+        <div class="div-button">
+          <button type="submit" class="btn form-btn signup-btn">Sign-Up</button>
+        </div>
+      </form>
+
+      <form action="." method="post" class="signIn hide">
+        <div class="close">&times;</div>
+          {% csrf_token %}
+          {{ signIn_form.as_p }}
+        {% comment %} <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" class="mail2" placeholder="email">
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" class="password2" placeholder="password">
+        </div> {% endcomment %}
+        <div class="div-button">
+          <button type='submit' class="btn form-btn signIn-btn">Sign-In</button>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="container">
+      <!-- <a href="./html/home.html"> -->
+        <button class="orange-image signIn">Sign-In</button>
+      <!-- </a> -->
+      <div class="grey-image"></div>
+      <div class="content-container">
+        <div class="landing-msg">
+          <h1>Orange Your Thoughts</h1>
+          <div>
+            <button class="btn get-started">Get started</button>
+            <p>Take notes the simple way for free. Forever</p>
+          </div>
+        </div>
+        <div class="landing-img">
+          <img src="{% static 'img/landing-page.png' %}" alt="img" width="300">
+        </div>
+      </div>
+      <div>
+        <img src="{% static 'img/landing-page.png' %}" alt="img" width="350">
+      </div>
+    </div>
+  </main>
+
+{% endblock content %}
